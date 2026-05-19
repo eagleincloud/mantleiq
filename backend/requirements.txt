@@ -1,0 +1,61 @@
+# Web Framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.7
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# Database & ORM
+SQLAlchemy==2.0.36
+GeoAlchemy2==0.16.0
+psycopg2-binary==2.9.10
+alembic==1.14.0
+
+# Geospatial Libraries
+geopandas==1.0.1
+shapely==2.0.6
+rasterio==1.4.3
+fiona==1.10.1
+pyproj==3.7.0
+h3==3.7.0
+
+# Data Processing
+numpy==2.2.1
+pandas==2.2.3
+scipy==1.15.1
+
+# Machine Learning
+scikit-learn==1.6.0
+xgboost==2.1.4
+shap==0.46.0
+
+# Configuration & Utilities
+PyYAML==6.0.2
+python-dotenv==1.0.1
+pydantic-extra-types==2.10.2
+
+# Export & Report Generation
+reportlab==4.2.5
+Pillow==11.1.0
+
+# Logging & Monitoring
+python-json-logger==2.0.8
+sentry-sdk==2.18.0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.25.1
+pytest-cov==6.0.0
+httpx==0.28.1
+
+# Code Quality
+black==24.10.0
+flake8==7.1.1
+mypy==1.14.1
+isort==5.13.2
+
+# API Documentation
+python-jose[cryptography]==3.3.0
+
+# Workflow Orchestration
+prefect==3.1.5

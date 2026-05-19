@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kansas Rift Basin",
+        "age_min_ma": 500,
+        "age_max_ma": 300,
+        "lithology_class": "ultramafic",
+        "confidence": 0.85
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -98,
+              37
+            ],
+            [
+              -93,
+              37
+            ],
+            [
+              -93,
+              40
+            ],
+            [
+              -98,
+              40
+            ],
+            [
+              -98,
+              37
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fault_name": "Nemaha Ridge Fault",
+        "fault_type": "normal",
+        "activity_class": "quaternary",
+        "confidence": 0.9
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -96,
+            37
+          ],
+          [
+            -95,
+            39
+          ],
+          [
+            -94,
+            40
+          ]
+        ]
+      }
+    }
+  ]
+}

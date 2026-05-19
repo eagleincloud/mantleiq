@@ -1,0 +1,195 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "92f3bbe5-169f-47e4-8aba-e96cb9bbbe7f",
+        "cell_id": "bf298070-d8d5-4d4f-bf50-b98982280106",
+        "prospectivity_score": 0.657141548667908,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 1,
+        "grid_y": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.5,
+          38.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "bebd2a7c-d5c8-4c2a-a446-c46a76404494",
+        "cell_id": "bf069866-389d-4623-a7f6-fdc9bfaf51ea",
+        "prospectivity_score": 0.6544170234375,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 0,
+        "grid_y": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.0,
+          38.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "4ccf1cc1-a97a-42ba-95cd-d917df74b45d",
+        "cell_id": "a1a2bdaa-89bb-40a7-a332-4cf45d1b2afd",
+        "prospectivity_score": 0.64703376197815,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 4,
+        "grid_y": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.0,
+          38.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "b89e1dd6-a684-4199-b201-fc7265048d26",
+        "cell_id": "ebb57372-1a9a-4624-a8db-45d95846a803",
+        "prospectivity_score": 0.624754855110169,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 3,
+        "grid_y": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.5,
+          38.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "83365340-5ba8-47ee-9d73-5332eccc1ca1",
+        "cell_id": "cafa6f39-c2eb-493e-b91e-3b53d385169b",
+        "prospectivity_score": 0.620446465637207,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 3,
+        "grid_y": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.5,
+          38.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "82a815d3-46c5-433f-a035-a40b67592dee",
+        "cell_id": "b5dc6b2e-77c1-457f-bb84-dc935fa868d0",
+        "prospectivity_score": 0.596391468910217,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 2,
+        "grid_y": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.0,
+          38.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "6814ab42-4f3a-442a-9734-bf9f6b3dbd9d",
+        "cell_id": "7e5ff899-7ae7-4c6a-a851-0c5638e41272",
+        "prospectivity_score": 0.596288328460693,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 2,
+        "grid_y": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.0,
+          38.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "109f648f-21e1-4574-a80a-2075ca89f263",
+        "cell_id": "bce0e5a6-075f-4597-b2ab-5a3336a8c0e8",
+        "prospectivity_score": 0.569386228042603,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 1,
+        "grid_y": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.5,
+          38.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "1bea2307-7195-4143-9e5e-7db49bca1370",
+        "cell_id": "28bfe356-0460-4bd2-866c-8c244e308de8",
+        "prospectivity_score": 0.5346847448349,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 4,
+        "grid_y": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.0,
+          38.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "fba89041-3338-4203-92cf-ac6bd06b49a0",
+        "cell_id": "397e479a-81d8-4e9e-b833-f12f4577b683",
+        "prospectivity_score": 0.533042483909607,
+        "confidence": 0.92,
+        "score_class": "medium",
+        "grid_x": 0,
+        "grid_y": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.0,
+          38.0
+        ]
+      }
+    }
+  ]
+}

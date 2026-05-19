@@ -1,0 +1,192 @@
+model:
+  version: prospectivity_v1
+  description: "Natural hydrogen prospectivity scoring model"
+  scoring_mode: ensemble
+
+  # Scoring Formula Weights (sum = 1.0)
+  # Sscore = (W_generation × F_gen + ... ) × C
+  weights:
+    f_generation: 0.30
+    f_fluid_interaction: 0.20
+    f_structural_pathways: 0.20
+    f_trap_retention: 0.15
+    f_surface_indicators: 0.10
+    f_thermodynamic: 0.05
+
+  # Confidence Modifier
+  # C = 0.5 + 0.5 × confidence_raw
+  # confidence_raw = 0.40×data_coverage + 0.40×data_quality + 0.20×missing_completeness
+  confidence:
+    formula: "0.5 + 0.5 * confidence_raw"
+    min_value: 0.5
+    max_value: 1.0
+    components:
+      data_coverage_weight: 0.40
+      data_quality_weight: 0.40
+      missing_data_completeness_weight: 0.20
+
+  # Rule-Based Scoring (Phase 1-2)
+  rule_model:
+    enabled: true
+    weights:
+      fault_intersection_density: 0.25
+      distance_to_ultramafic: 0.20
+      gravity_anomaly_score: 0.15
+      magnetic_anomaly_score: 0.10
+      thermal_gradient_score: 0.10
+      structural_complexity_index: 0.10
+      seep_proximity_score: 0.10
+
+    # Feature normalization parameters
+    normalization:
+      fault_intersection_density:
+        type: inverse_distance
+        good_km: 0.0
+        bad_km: 20.0
+      distance_to_ultramafic:
+        type: inverse_distance
+        good_km: 0.0
+        bad_km: 50.0
+      seep_proximity_score:
+        type: inverse_distance
+        good_km: 0.0
+        bad_km: 100.0
+
+  # Machine Learning Model (Phase 2+)
+  ml_model:
+    enabled: false
+    type: xgboost
+    model_path: models/xgboost_prospectivity_v1.pkl
+    hyperparameters:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+
+    required_features:
+      - fault_intersection_density
+      - distance_to_ultramafic
+      - gravity_anomaly_score
+      - magnetic_anomaly_score
+      - thermal_gradient_score
+      - structural_complexity_index
+      - seep_proximity_score
+      - groundwater_proxy
+      - permeability_proxy
+      - sedimentary_cover_score
+      - caprock_proxy_score
+      - heatflow_interp_mwm2
+      - slope_mean
+      - relief
+
+  # Ensemble Scoring (Hybrid Rule + ML)
+  ensemble:
+    enabled: true
+    rule_weight: 0.60
+    ml_weight: 0.40
+    combination_method: weighted_average
+
+  # Output Scoring Classes
+  score_classes:
+    - score_min: 80
+      score_max: 100
+      label: "High-priority target"
+      description: "Excellent hydrogen prospectivity with strong data support"
+
+    - score_min: 65
+      score_max: 79
+      label: "Strong prospect, needs validation"
+      description: "Good prospectivity signals but requires additional data"
+
+    - score_min: 50
+      score_max: 64
+      label: "Moderate prospect"
+      description: "Positive indicators present but incomplete assessment"
+
+    - score_min: 35
+      score_max: 49
+      label: "Weak / speculative"
+      description: "Limited favorable signals, high uncertainty"
+
+    - score_min: 0
+      score_max: 34
+      label: "Low priority"
+      description: "Unfavorable conditions or insufficient data"
+
+  # Grid Cell Configuration
+  grid:
+    cell_size_km: 10
+    grid_type: h3
+    h3_resolution: 5
+    # Alternative: use square grid if H3 unavailable
+    # grid_type: square
+    # square_cell_size_km: 10
+    clustering_method: dbscan
+    dbscan_eps_km: 12
+    dbscan_min_samples: 4
+    min_cells_per_zone: 2
+
+  # Missing Data Handling
+  missing_data:
+    # Default value if data layer unavailable
+    # Using 50% (neutral score) prevents unfair zeroing in frontier regions
+    surface_indicators_default: 50.0
+    surface_indicators_confidence: 0.0
+
+    fallback_strategies:
+      f_generation:
+        if_no_serpentinization:
+          formula: "0.6×ultramafic_score + 0.2×heatflow_score + 0.2×groundwater_proxy"
+
+      f_fluid_interaction:
+        if_no_groundwater_data:
+          formula: "0.4×low_slope_score + 0.3×basin_presence + 0.3×sedimentary_cover"
+
+      f_surface_indicators:
+        if_no_surface_data:
+          default_value: 50.0
+          reason: "Prevent sparse public data from unfairly zeroing frontier systems"
+
+  # Feature Importance / Contribution
+  feature_labels:
+    fault_intersection_density: "Major fault intersection proximity"
+    distance_to_ultramafic: "Ultramafic / mafic source-rock proximity"
+    gravity_anomaly_score: "Gravity anomaly strength"
+    magnetic_anomaly_score: "Magnetic anomaly strength"
+    thermal_gradient_score: "Thermal gradient favorability"
+    structural_complexity_index: "Structural complexity"
+    seep_proximity_score: "Known seep / gas anomaly proximity"
+    groundwater_proxy: "Groundwater circulation potential"
+    permeability_proxy: "Rock permeability proxy"
+    sedimentary_cover_score: "Sedimentary cover thickness"
+    caprock_proxy_score: "Caprock seal potential"
+    heatflow_interp_mwm2: "Heat flow magnitude"
+    slope_mean: "Topographic relief"
+    relief: "Terrain variability"
+
+  # Recommended Next Actions
+  recommended_actions:
+    high_priority_target:
+      - "Conduct gravity/magnetic reprocessing"
+      - "Acquire targeted gravity data"
+      - "Plan field validation survey"
+      - "Analyze well logs if available"
+
+    strong_prospect:
+      - "Run soil gas hydrogen and helium survey"
+      - "Acquire or reprocess gravity and magnetic data"
+      - "Validate structures with field mapping or seismic"
+
+    moderate_prospect:
+      - "Gather additional geochemical data"
+      - "Conduct preliminary field investigation"
+      - "Refine geological interpretation"
+
+# Version control
+version_history:
+  v1:
+    date: "2026-05-10"
+    description: "Initial prospectivity model with rule-based scoring"
+    author: "MantleIQ Team"

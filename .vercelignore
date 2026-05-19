@@ -1,0 +1,15 @@
+backend/
+.git/
+.env
+.env.example
+.env.local
+node_modules/
+*.md
+.DS_Store
+.claude/
+infra/
+data/
+local_storage/
+docker-compose.yml
+Dockerfile
+.gitignore

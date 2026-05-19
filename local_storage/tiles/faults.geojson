@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cfa576f5-1efe-44ad-8091-96dc1bee7cef",
+        "name": "Nemaha Ridge Fault",
+        "fault_type": "normal",
+        "confidence": 0.9
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "d1af6bdb-2ce9-4951-87da-6b631c917dde",
+        "name": "Central Kansas Uplift",
+        "fault_type": "normal",
+        "confidence": 0.85
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "6d41f82d-4755-44c7-8103-fa71978a153c",
+        "name": "Midland Basin Boundary",
+        "fault_type": "strike-slip",
+        "confidence": 0.8
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "36e53ec0-fb84-47c1-8010-f1b44e27eec1",
+        "name": "Nemaha Ridge Fault",
+        "fault_type": "normal",
+        "confidence": 0.9
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "424de6f5-bad8-489b-a12f-1086f6e991b7",
+        "name": "Central Kansas Uplift",
+        "fault_type": "normal",
+        "confidence": 0.85
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "0c2e9a1f-2cf8-4625-a337-e95ec6441a37",
+        "name": "Midland Basin Boundary",
+        "fault_type": "strike-slip",
+        "confidence": 0.8
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": []
+      }
+    }
+  ]
+}

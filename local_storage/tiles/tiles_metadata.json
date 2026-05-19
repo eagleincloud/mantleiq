@@ -1,0 +1,75 @@
+{
+  "tiles": {
+    "model_outputs": {
+      "file": "model_outputs.geojson",
+      "description": "Prospectivity scores and rankings for all grid cells",
+      "layers": [
+        "points"
+      ],
+      "feature_count": 10
+    },
+    "heatmap_grid": {
+      "file": "heatmap_grid.geojson",
+      "description": "Grid-based heatmap visualization of prospectivity",
+      "layers": [
+        "grid"
+      ],
+      "feature_count": 10
+    },
+    "prospect_zones": {
+      "file": "prospect_zones.geojson",
+      "description": "Clustered prospect zones with aggregated scores",
+      "layers": [
+        "zones"
+      ],
+      "feature_count": 0
+    },
+    "faults": {
+      "file": "faults.geojson",
+      "description": "Fault lines and structural features",
+      "layers": [
+        "lines"
+      ],
+      "feature_count": 6
+    },
+    "heatflow_points": {
+      "file": "heatflow_points.geojson",
+      "description": "Heat flow measurement points and interpolation",
+      "layers": [
+        "points"
+      ],
+      "feature_count": 8
+    }
+  },
+  "vector_tile_info": {
+    "format": "GeoJSON (MVT-compatible)",
+    "projection": "EPSG:4326 (WGS84)",
+    "browser_compatible": true,
+    "usage": "Load in MapLibre with GeoJSON sources"
+  },
+  "rendering_suggestions": {
+    "prospectivity_color_scale": {
+      "high": {
+        "score_range": [
+          0.75,
+          1.0
+        ],
+        "color": "#d94848"
+      },
+      "medium": {
+        "score_range": [
+          0.5,
+          0.75
+        ],
+        "color": "#d89a00"
+      },
+      "low": {
+        "score_range": [
+          0.0,
+          0.5
+        ],
+        "color": "#087f8c"
+      }
+    }
+  }
+}

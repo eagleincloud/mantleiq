@@ -1,0 +1,150 @@
+datasets:
+  # Basin Boundary - User uploads or public data
+  basins:
+    source_name: "User-provided or USGS"
+    type: vector
+    format: shapefile_or_geojson
+    target_table: basins
+    priority: critical
+    required: true
+    crs: EPSG:4326
+
+  # Lithology and Geological Units
+  lithology_macrostrat:
+    source_name: "Macrostrat Geological Database"
+    source_url: "https://macrostrat.org/api/v2"
+    type: vector
+    format: geojson
+    target_table: geologic_units
+    priority: critical
+    required: true
+    crs: EPSG:4326
+    description: "Ultramafic, mafic, sedimentary lithology classification"
+
+  lithology_glim:
+    source_name: "Global Lithological Map (GLiM)"
+    source_url: "https://www.geo.uni-hamburg.de/en/geologie/forschung/aquatische-geochemie/glim.html"
+    type: vector
+    format: shapefile_or_geojson
+    target_table: geologic_units
+    priority: high
+    required: false
+    crs: EPSG:4326
+    description: "Global lithology proxy for ultramafic/mafic assessment"
+
+  # Structural Geology - Faults
+  faults_usgs:
+    source_name: "USGS Earthquake Hazards Program"
+    source_url: "https://www.usgs.gov/programs/earthquake-hazards/faults"
+    type: vector
+    format: shapefile
+    target_table: faults
+    priority: critical
+    required: true
+    crs: EPSG:4326
+    description: "Quaternary and mapped fault traces"
+
+  # Geophysics - Gravity
+  gravity_noaa:
+    source_name: "NOAA/NCEI Gravity Data"
+    source_url: "https://www.ncei.noaa.gov/products/gravity-data"
+    type: raster
+    format: geotiff
+    target_table: gravity_tiles
+    priority: critical
+    required: true
+    crs: EPSG:4326
+    resolution: "~5 km (gridded Bouguer anomaly)"
+    anomaly_type: "Bouguer anomaly (land), free-air (offshore)"
+    description: "Gravity anomaly grid for basement architecture"
+
+  # Geophysics - Magnetic
+  magnetic_emag2:
+    source_name: "NOAA EMAG2 v3"
+    source_url: "https://www.ncei.noaa.gov/products/earth-magnetic-model-anomaly-grid-2"
+    type: raster
+    format: geotiff
+    target_table: magnetic_tiles
+    priority: critical
+    required: true
+    crs: EPSG:4326
+    resolution: "2-arc-minute (~3.7 km) global grid"
+    description: "Total magnetic intensity anomaly from satellite, ship, airborne measurements"
+
+  # Thermal - Heat Flow
+  heatflow_ihfc:
+    source_name: "IHFC Global Heat Flow Database"
+    source_url: "https://www.ihfc-iugg.org/products/global-heat-flow-database/data"
+    type: point_csv
+    format: csv
+    target_table: heatflow_points
+    priority: critical
+    required: true
+    crs: EPSG:4326
+    description: "Heat flow measurements (mW/m²) from global compilation"
+
+  # Terrain/DEM
+  dem_srtm:
+    source_name: "NASA SRTM (Shuttle Radar Topography Mission)"
+    source_url: "https://www.earthdata.nasa.gov/data/instruments/srtm"
+    type: raster
+    format: geotiff
+    target_table: terrain_tiles
+    priority: high
+    required: true
+    crs: EPSG:4326
+    resolution: "90m"
+    description: "Digital elevation model for slope, relief, groundwater proxy"
+
+  # Surface Indicators - Natural Hydrogen Seeps
+  surface_indicators:
+    source_name: "Manual curation from academic papers + USGS reports"
+    source_url: "https://pubs.usgs.gov"
+    type: point_csv
+    format: csv
+    target_table: surface_indicators
+    priority: medium
+    required: false
+    crs: EPSG:4326
+    description: "Known H2 seeps, gas anomalies, helium anomalies, soil gas surveys"
+    indicator_types:
+      - known_h2_seep
+      - gas_show
+      - soil_h2_anomaly
+      - helium_anomaly
+      - hydrothermal_indicator
+
+# Data acquisition strategy
+acquisition_strategy:
+  phase_1_foundation:
+    - basins
+    - lithology_macrostrat
+    - faults_usgs
+    - gravity_noaa
+    - magnetic_emag2
+    - heatflow_ihfc
+    - dem_srtm
+  phase_2_enhanced:
+    - lithology_glim
+    - surface_indicators
+  phase_3_optional:
+    - seismic_interpretation
+    - well_logs
+    - proprietary_gas_composition
+
+# Data validation rules
+validation:
+  geometry:
+    check_validity: true
+    check_intersection_with_basin: true
+    simplify_if_needed: true
+  crs:
+    target: EPSG:4326
+    auto_reproject: true
+  attributes:
+    allow_null_values: false
+    required_fields:
+      basins: [name, geometry]
+      geologic_units: [lithology_class, geometry]
+      faults: [fault_name, geometry]
+      heatflow_points: [heatflow_mwm2, geometry]

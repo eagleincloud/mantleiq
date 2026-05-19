@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Frontend Dev Server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "frontend",
+      "port": 5173
+    },
+    {
+      "name": "Backend API",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["/tmp/run_mantleiq.py"],
+      "port": 8001
+    }
+  ]
+}

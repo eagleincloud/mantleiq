@@ -1,0 +1,346 @@
+pipeline:
+  description: "Data integration and processing pipeline for MantleIQ"
+  version: "1.0"
+
+  # Stage 1: Raw Data Ingestion
+  stage_ingest_foundation:
+    description: "Ingest base geospatial datasets"
+    tasks:
+      - task_name: ingest_basins
+        script: scripts/ingest_vector.py
+        params:
+          layer_type: vector
+          target_table: basins
+          crs: EPSG:4326
+        priority: critical
+
+      - task_name: ingest_faults
+        script: scripts/ingest_vector.py
+        params:
+          layer_type: vector
+          target_table: faults
+          source_url: https://www.usgs.gov/programs/earthquake-hazards/faults
+          crs: EPSG:4326
+        priority: critical
+
+      - task_name: ingest_lithology
+        script: scripts/ingest_vector.py
+        params:
+          layer_type: vector
+          target_table: geologic_units
+          source: macrostrat_api
+          crs: EPSG:4326
+        priority: critical
+
+      - task_name: ingest_gravity
+        script: scripts/ingest_raster_metadata.py
+        params:
+          layer_type: raster
+          target_table: gravity_tiles
+          source_url: https://www.ncei.noaa.gov/products/gravity-data
+          format: geotiff
+          resolution: "5 km"
+        priority: critical
+
+      - task_name: ingest_magnetic
+        script: scripts/ingest_raster_metadata.py
+        params:
+          layer_type: raster
+          target_table: magnetic_tiles
+          source_url: https://www.ncei.noaa.gov/products/earth-magnetic-model-anomaly-grid-2
+          format: geotiff
+          resolution: "2-arc-minute"
+        priority: critical
+
+      - task_name: ingest_heatflow
+        script: scripts/ingest_point_csv.py
+        params:
+          layer_type: point
+          target_table: heatflow_points
+          source_url: https://www.ihfc-iugg.org/products/global-heat-flow-database/data
+          lon_col: lon
+          lat_col: lat
+        priority: critical
+
+      - task_name: ingest_dem
+        script: scripts/ingest_raster_metadata.py
+        params:
+          layer_type: raster
+          target_table: terrain_tiles
+          source_url: https://www.earthdata.nasa.gov/data/instruments/srtm
+          format: geotiff
+          resolution: "90m"
+        priority: high
+
+      - task_name: ingest_surface_indicators
+        script: scripts/ingest_point_csv.py
+        params:
+          layer_type: point
+          target_table: surface_indicators
+          lon_col: lon
+          lat_col: lat
+        priority: medium
+
+  # Stage 2: Data Normalization
+  stage_normalize:
+    description: "Normalize and standardize all layers"
+    tasks:
+      - task_name: normalize_geometries
+        sql: "infra/sql/normalize_geometries.sql"
+        description: "Ensure valid geometries, fix topology issues"
+
+      - task_name: reproject_to_4326
+        sql: "infra/sql/reproject_to_4326.sql"
+        description: "Reproject all vector layers to EPSG:4326"
+
+      - task_name: clip_to_basin
+        sql: "infra/sql/clip_to_basin.sql"
+        description: "Clip all layers to basin boundary"
+
+      - task_name: build_spatial_indexes
+        sql: "infra/sql/build_indexes.sql"
+        description: "Create GIST/BRIN indexes for performance"
+
+  # Stage 3: Grid Generation
+  stage_grid_generation:
+    description: "Generate analysis grid (H3 or square)"
+    tasks:
+      - task_name: generate_h3_grid
+        script: scripts/generate_h3_grid.py
+        params:
+          resolution: 5
+          geometry_column: basin_geometry
+        priority: critical
+
+      - task_name: generate_cell_centroids
+        sql: "infra/sql/generate_cell_centroids.sql"
+
+      - task_name: compute_cell_areas
+        sql: "infra/sql/compute_cell_areas.sql"
+
+  # Stage 4: Feature Engineering
+  stage_feature_engineering:
+    description: "Compute geospatial features per grid cell"
+    tasks:
+      # Generation (30%)
+      - task_name: compute_fault_density
+        sql: "infra/sql/features/fault_density.sql"
+        priority: critical
+
+      - task_name: compute_ultramafic_proximity
+        sql: "infra/sql/features/ultramafic_proximity.sql"
+        priority: critical
+
+      - task_name: compute_serpentinization_proxy
+        sql: "infra/sql/features/serpentinization_proxy.sql"
+        priority: high
+
+      - task_name: compute_gravity_anomaly
+        script: "scripts/compute_gravity_anomaly.py"
+        priority: critical
+
+      - task_name: compute_magnetic_anomaly
+        script: "scripts/compute_magnetic_anomaly.py"
+        priority: critical
+
+      - task_name: compute_heatflow_interpolation
+        sql: "infra/sql/features/heatflow_interpolation.sql"
+        priority: critical
+
+      # Fluid Interaction (20%)
+      - task_name: compute_slope_flow_proxy
+        sql: "infra/sql/features/slope_flow_proxy.sql"
+        priority: high
+
+      - task_name: compute_groundwater_proxy
+        sql: "infra/sql/features/groundwater_proxy.sql"
+        priority: high
+
+      - task_name: compute_permeability_proxy
+        sql: "infra/sql/features/permeability_proxy.sql"
+        priority: high
+
+      - task_name: compute_basin_presence
+        sql: "infra/sql/features/basin_presence.sql"
+        priority: high
+
+      # Structural Pathways (20%)
+      - task_name: compute_fault_intersection
+        sql: "infra/sql/features/fault_intersection_density.sql"
+        priority: critical
+
+      - task_name: compute_gravity_gradient
+        script: "scripts/compute_gravity_gradient.py"
+        priority: critical
+
+      - task_name: compute_magnetic_gradient
+        script: "scripts/compute_magnetic_gradient.py"
+        priority: critical
+
+      - task_name: compute_structural_complexity
+        sql: "infra/sql/features/structural_complexity.sql"
+        priority: high
+
+      # Trap Retention (15%)
+      - task_name: compute_sedimentary_cover
+        sql: "infra/sql/features/sedimentary_cover_score.sql"
+        priority: high
+
+      - task_name: compute_caprock_proxy
+        sql: "infra/sql/features/caprock_proxy_score.sql"
+        priority: high
+
+      - task_name: compute_closure_proxy
+        sql: "infra/sql/features/closure_proxy.sql"
+        priority: medium
+
+      # Surface Indicators (10%)
+      - task_name: compute_seep_proximity
+        sql: "infra/sql/features/seep_proximity.sql"
+        priority: medium
+
+      # Thermodynamic (5%)
+      - task_name: compute_thermal_window
+        sql: "infra/sql/features/thermal_window_score.sql"
+        priority: medium
+
+      # Data Completeness
+      - task_name: compute_data_completeness
+        sql: "infra/sql/features/data_completeness.sql"
+        priority: high
+
+  # Stage 5: Scoring
+  stage_scoring:
+    description: "Calculate prospectivity scores and rankings"
+    tasks:
+      - task_name: compute_rule_scores
+        script: "backend/scripts/score_cells_rule.py"
+        description: "Apply rule-based weighted scoring"
+        priority: critical
+
+      - task_name: compute_ml_scores
+        script: "backend/scripts/score_cells_ml.py"
+        description: "XGBoost ML model scoring (if enabled)"
+        priority: high
+        optional: true
+
+      - task_name: compute_ensemble_scores
+        script: "backend/scripts/score_cells_ensemble.py"
+        description: "Combine rule + ML via ensemble"
+        priority: critical
+
+      - task_name: compute_confidence_scores
+        script: "backend/scripts/score_cells_confidence.py"
+        description: "Calculate confidence modifier C"
+        priority: critical
+
+      - task_name: apply_final_scores
+        sql: "infra/sql/apply_final_scores.sql"
+        description: "Sscore = ensemble × confidence"
+        priority: critical
+
+      - task_name: rank_cells
+        sql: "infra/sql/rank_cells.sql"
+        description: "Rank all cells by score within basin"
+
+  # Stage 6: Clustering & Zone Generation
+  stage_clustering:
+    description: "Cluster top cells into prospect zones"
+    tasks:
+      - task_name: identify_top_cells
+        sql: "infra/sql/identify_top_percentile_cells.sql"
+        params:
+          percentile: 95
+        priority: critical
+
+      - task_name: dbscan_clustering
+        script: "scripts/dbscan_cluster.py"
+        params:
+          eps_km: 12
+          min_samples: 4
+        priority: critical
+
+      - task_name: generate_zone_polygons
+        sql: "infra/sql/generate_zone_polygons.sql"
+        description: "Create convex hull geometry for each cluster"
+
+      - task_name: aggregate_zone_scores
+        sql: "infra/sql/aggregate_zone_scores.sql"
+        description: "Compute zone-level scores from component cells"
+
+      - task_name: compute_zone_centroids
+        sql: "infra/sql/compute_zone_centroids.sql"
+
+  # Stage 7: Explainability
+  stage_explainability:
+    description: "Compute feature contributions and explanations"
+    tasks:
+      - task_name: compute_feature_contributions
+        script: "backend/scripts/compute_contributions.py"
+        description: "SHAP values or attribution scores"
+        priority: high
+
+      - task_name: identify_missing_data_caveats
+        script: "backend/scripts/identify_missing_data.py"
+        priority: high
+
+      - task_name: generate_narratives
+        script: "backend/scripts/generate_narratives.py"
+        description: "Create text explanations for zones"
+
+  # Stage 8: Export & Delivery
+  stage_export:
+    description: "Generate reports and export deliverables"
+    tasks:
+      - task_name: generate_vector_tiles
+        script: "scripts/generate_vector_tiles.sh"
+        description: "pg_tileserv tile generation"
+        optional: true
+
+      - task_name: export_zones_geojson
+        sql: "infra/sql/export_zones_geojson.sql"
+        description: "GeoJSON export for mapping"
+
+      - task_name: export_zones_csv
+        sql: "infra/sql/export_zones_csv.sql"
+        description: "CSV export for analysis"
+
+      - task_name: generate_pdf_reports
+        script: "backend/scripts/generate_pdf_report.py"
+        description: "ReportLab PDF generation"
+
+# Execution Configuration
+execution:
+  # Local development with Docker Compose
+  local:
+    db_host: db
+    db_port: 5432
+    db_name: mantleiq
+    log_level: DEBUG
+
+  # GCP Cloud Run / Cloud SQL
+  cloud:
+    db_host: ${CLOUD_SQL_CONNECTION_NAME}
+    db_port: 5432
+    db_name: mantleiq
+    log_level: INFO
+    storage_bucket: gs://{project}-curated/
+
+# Scheduling
+scheduling:
+  full_pipeline:
+    frequency: weekly
+    day: monday
+    time: "02:00 UTC"
+
+  incremental_update:
+    frequency: daily
+    time: "02:00 UTC"
+    stages: [stage_ingest_foundation, stage_normalize]
+
+# Monitoring & Logging
+monitoring:
+  log_all_tasks: true
+  track_lineage: true
+  slack_notifications: true
+  email_on_failure: true

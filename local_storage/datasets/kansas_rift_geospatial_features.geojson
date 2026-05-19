@@ -1,0 +1,477 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fault 1",
+        "fault_type": "normal",
+        "activity_class": "quaternary",
+        "confidence": 0.9467634824493842
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -96.5,
+            37.2
+          ],
+          [
+            -96,
+            38
+          ],
+          [
+            -95.5,
+            39
+          ],
+          [
+            -95,
+            40
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fault 2",
+        "fault_type": "normal",
+        "activity_class": "holocene",
+        "confidence": 0.8827939271939259
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -97,
+            37.5
+          ],
+          [
+            -96.5,
+            38.5
+          ],
+          [
+            -96,
+            39.5
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fault 3",
+        "fault_type": "normal",
+        "activity_class": "holocene",
+        "confidence": 0.8831574931851834
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -94.5,
+            37.8
+          ],
+          [
+            -94,
+            38.5
+          ],
+          [
+            -93.5,
+            39.2
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 1",
+        "rock_type": "ultramafic",
+        "age_ma": 490,
+        "extent_km2": 138
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.37700824574252,
+          37.391566963188815
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 2",
+        "rock_type": "mafic",
+        "age_ma": 537,
+        "extent_km2": 201
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.04950984807968,
+          37.310392710656814
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 3",
+        "rock_type": "ultramafic",
+        "age_ma": 497,
+        "extent_km2": 164
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.5694675064034,
+          37.467169983102984
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 4",
+        "rock_type": "mafic",
+        "age_ma": 506,
+        "extent_km2": 159
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.53463367267669,
+          36.92646524626194
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 5",
+        "rock_type": "ultramafic",
+        "age_ma": 526,
+        "extent_km2": 217
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.03172677784934,
+          37.96526761960946
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 6",
+        "rock_type": "mafic",
+        "age_ma": 502,
+        "extent_km2": 117
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.95066595077962,
+          38.168682384726004
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 7",
+        "rock_type": "ultramafic",
+        "age_ma": 471,
+        "extent_km2": 97
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.76079335555988,
+          38.204547908327015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ultramafic Body 8",
+        "rock_type": "mafic",
+        "age_ma": 439,
+        "extent_km2": 243
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.20581292086163,
+          38.44333353867825
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 67.58061948970501,
+        "depth_m": 2193,
+        "quality": "fair"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.28821338500391,
+          37.747579472259524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 78.8473019850745,
+        "depth_m": 1231,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.61500490215536,
+          37.04492306464644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 74.53137075541756,
+        "depth_m": 1734,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.65443435829972,
+          39.891289886598834
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 78.277694807844,
+        "depth_m": 1433,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.79702787741103,
+          37.686752075645884
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 61.24536473948496,
+        "depth_m": 1973,
+        "quality": "fair"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.64299288261991,
+          38.733065563051284
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 74.47037152016816,
+        "depth_m": 1116,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.15150288804419,
+          37.23646501411557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 71.10846336604118,
+        "depth_m": 1715,
+        "quality": "fair"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.1326424672612,
+          39.33726823737261
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 64.86666679479552,
+        "depth_m": 2205,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.95982350746908,
+          38.02136102415315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 79.00095505059338,
+        "depth_m": 1607,
+        "quality": "fair"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.5069995719933,
+          38.65121343005784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 60.64249688704492,
+        "depth_m": 1510,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.52493573860893,
+          37.51840041161891
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 65.33295040931179,
+        "depth_m": 1868,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.38349435063046,
+          37.18788626506295
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "measurement_type": "borehole",
+        "heatflow_mw_m2": 67.89960410117722,
+        "depth_m": 1615,
+        "quality": "good"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.3100595587036,
+          38.786459398310555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kansas Rift Main Basin",
+        "structural_class": "rift",
+        "depth_to_basement_km": 3.810456961083912
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -98.0,
+              37
+            ],
+            [
+              -96.0,
+              37
+            ],
+            [
+              -96.0,
+              38.5
+            ],
+            [
+              -98.0,
+              38.5
+            ],
+            [
+              -98.0,
+              37
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Secondary Graben",
+        "structural_class": "graben",
+        "depth_to_basement_km": 4.369452769663422
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -97.5,
+              37
+            ],
+            [
+              -95.5,
+              37
+            ],
+            [
+              -95.5,
+              38.5
+            ],
+            [
+              -97.5,
+              38.5
+            ],
+            [
+              -97.5,
+              37
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

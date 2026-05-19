@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # PostgreSQL with PostGIS
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: mantleiq_db
+    environment:
+      POSTGRES_USER: mantleiq
+      POSTGRES_PASSWORD: mantleiq_local_dev
+      POSTGRES_DB: mantleiq_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infra/sql:/docker-entrypoint-initdb.d
+      - mantleiq_data:/var/lib/postgresql/data
+    networks:
+      - mantleiq_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mantleiq"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: mantleiq_api
+    environment:
+      DATABASE_URL: postgresql+psycopg2://mantleiq:mantleiq_local_dev@db:5432/mantleiq_db
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      API_LOG_LEVEL: ${API_LOG_LEVEL:-DEBUG}
+      VITE_API_URL: http://localhost:8000
+      POSTGRES_USER: mantleiq
+      POSTGRES_PASSWORD: mantleiq_local_dev
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Mount source code for hot reload (development)
+      - ./backend:/app/backend:ro
+      - ./config:/app/config:ro
+    command: >
+      sh -c "
+        echo 'Waiting for PostgreSQL with PostGIS...' &&
+        sleep 5 &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+    networks:
+      - mantleiq_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mantleiq_ui
+    environment:
+      VITE_API_URL: http://localhost:8000
+      PORT: 5173
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      # Mount source code for HMR (hot module replacement)
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.js:/app/vite.config.js
+    networks:
+      - mantleiq_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+networks:
+  mantleiq_network:
+    driver: bridge
+
+volumes:
+  mantleiq_data:
+    driver: local

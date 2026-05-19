@@ -1,0 +1,93 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "41c8bab3-67c4-4c9e-892f-196ec1daedfe",
+        "heatflow_mw_m2": 75.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "b262e9fe-f5d4-453d-a8c1-f8f111824bd3",
+        "heatflow_mw_m2": 68.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "35d806dc-b1a8-4e89-af90-ac3d18178b57",
+        "heatflow_mw_m2": 82.1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "5dee78f7-4fc1-47f1-bbcd-efcd2a025cbe",
+        "heatflow_mw_m2": 70.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ee88472c-7d7d-4c08-b622-d34753fdb33c",
+        "heatflow_mw_m2": 75.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "0be89246-e612-4998-a3ad-d0e648e43835",
+        "heatflow_mw_m2": 68.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "a5e12485-a276-449e-9518-9e37e1627b14",
+        "heatflow_mw_m2": 82.1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "a78c2dd1-0f1e-4cc4-bbe4-632bdcf535ea",
+        "heatflow_mw_m2": 70.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": []
+      }
+    }
+  ]
+}

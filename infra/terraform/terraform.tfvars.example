@@ -1,0 +1,37 @@
+# MantleIQ Terraform Configuration Example
+# Copy this to terraform.tfvars and update with your values
+
+gcp_project_id        = "your-gcp-project-id"
+gcp_region            = "us-central1"
+
+# Database Configuration
+database_instance_name = "mantleiq-postgres"
+database_machine_type = "db-custom-4-16"
+database_disk_size_gb = 100
+database_user         = "mantleiq"
+
+# Pipeline Configuration
+default_basin_id      = "kansas-rift-demo"
+pipeline_schedule     = "0 2 * * *"  # Daily at 2 AM UTC
+
+# Cloud Run Configuration
+cloud_run_memory      = "2Gi"
+cloud_run_cpu         = "2"
+cloud_run_max_instances = 100
+
+# Feature Flags
+enable_private_ip     = true
+enable_backup         = true
+enable_monitoring     = true
+
+# Backup Configuration
+backup_location       = "us"
+
+# Labels
+labels = {
+  application = "mantleiq"
+  environment = "production"
+  team        = "geospatial-ai"
+  managed_by  = "terraform"
+  cost_center = "engineering"
+}
