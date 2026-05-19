@@ -379,3 +379,4 @@ Proprietary. MantleIQ © 2026.
 
 **Last Updated:** 2026-05-10  
 **Status:** MVP Phase 1 - Data Ingestion
+# Force rebuild
